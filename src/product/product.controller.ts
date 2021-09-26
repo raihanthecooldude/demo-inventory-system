@@ -22,7 +22,7 @@ export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Post()
-  //   @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   async createProduct(
     @Body() createProductDto: CreateProductDto,
   ): Promise<Product> {
@@ -36,7 +36,7 @@ export class ProductController {
   }
 
   @Patch('/checkout')
-  //   @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   async checkoutProduct(
     @Body() checkoutProductDto: CheckoutProductDto,
   ): Promise<Product> {
@@ -53,7 +53,7 @@ export class ProductController {
   }
 
   @Patch('/:id/update')
-  //   @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   async updateProduct(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,

@@ -5,7 +5,9 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AreaService } from 'src/area/area.service';
 import { CreateWarehouseDto } from './dto/warehouse.dto';
 import { Warehouse } from './warehouse.entity';
@@ -19,7 +21,7 @@ export class WarehouseController {
   ) {}
 
   @Post('/:id')
-  //   @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   async createWarehouse(
     @Param('id', ParseIntPipe) id: number,
     @Body() createWarehouseDto: CreateWarehouseDto,

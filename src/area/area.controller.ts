@@ -5,7 +5,9 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Area } from './area.entity';
 import { AreaService } from './area.service';
 import { CreateAreaDto } from './dto/area.dto';
@@ -15,7 +17,7 @@ export class AreaController {
   constructor(private areaService: AreaService) {}
 
   @Post()
-  //   @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   async createArea(@Body() createAreaDto: CreateAreaDto): Promise<Area> {
     const result = await this.areaService.createArea(createAreaDto);
     return result;

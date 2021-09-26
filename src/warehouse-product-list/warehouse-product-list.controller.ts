@@ -5,7 +5,9 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ProductService } from 'src/product/product.service';
 import { WarehouseService } from 'src/warehouse/warehouse.service';
 import { CreateWarehouseProductListDto } from './dto/warehouse-product-list.dto';
@@ -21,7 +23,7 @@ export class WarehouseProductListController {
   ) {}
 
   @Post('/:id')
-  //   @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   async createWarehouseProductList(
     @Param('id', ParseIntPipe) id: number,
     @Body() createWarehouseProductListDto: CreateWarehouseProductListDto,
