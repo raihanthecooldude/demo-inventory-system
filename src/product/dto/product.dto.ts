@@ -1,12 +1,12 @@
 import {
-  IsBooleanString,
-  IsDateString,
+  IsEnum,
+  IsIn,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
-  IsUrl,
 } from 'class-validator';
+import { ProductAvailability } from '../product-availability.enum';
 
 export class CreateProductDto {
   @IsString({ message: 'invalid product name' })
@@ -14,6 +14,7 @@ export class CreateProductDto {
   name: string;
 
   @IsNumber({}, { message: 'invalid product selling price' })
+  @IsNotEmpty({ message: 'invalid product selling price' })
   sellingPrice: number;
 
   @IsOptional()
@@ -21,5 +22,23 @@ export class CreateProductDto {
   description: string;
 
   @IsNumber({}, { message: 'invalid product inventory' })
+  @IsNotEmpty({ message: 'invalid product inventory' })
   inventory: number;
+}
+
+export class CheckoutProductDto {
+  @IsNumber({}, { message: 'invalid product' })
+  @IsNotEmpty({ message: 'invalid product' })
+  productId: number;
+}
+
+export class UpdateProductDto {
+  @IsOptional()
+  @IsNumber({}, { message: 'invalid product quantity' })
+  inventory: number;
+
+  @IsOptional()
+  @IsEnum(ProductAvailability)
+  @IsIn([ProductAvailability.AVAILABLE, ProductAvailability.STOCKET_OUT])
+  productAvailability: ProductAvailability;
 }

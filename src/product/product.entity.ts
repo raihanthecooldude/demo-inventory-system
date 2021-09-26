@@ -1,4 +1,12 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { WarehouseProductList } from 'src/warehouse-product-list/warehouse-product-list.entity';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ProductAvailability } from './product-availability.enum';
 
 @Entity()
 export class Product extends BaseEntity {
@@ -16,4 +24,17 @@ export class Product extends BaseEntity {
 
   @Column({ type: 'int', default: 0 })
   inventory: number;
+
+  @Column({
+    type: 'enum',
+    enum: ProductAvailability,
+    default: ProductAvailability.AVAILABLE,
+  })
+  productAvailability: ProductAvailability;
+
+  @OneToMany(
+    () => WarehouseProductList,
+    (warehouseProductList) => warehouseProductList.product,
+  )
+  warehouseProductLists: WarehouseProductList[];
 }
